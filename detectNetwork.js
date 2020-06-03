@@ -49,12 +49,14 @@ var detectNetwork = function(cardNumber) {
     return mcName;
   }
   //test for a Discover Card
-  //if card length is 16 or 19 and prefix is 6
+  //if card length is 16 or 19 and first digit is 6
   else if ((cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '6') {
 
-    //if next three digits are is 011, 44-49, or 5
-    var nextThreeDigits = cardNumber.substring(1,5);
-    if(nextThreeDigits === '011' || (parseInt(nextThree, 10) >= 44 && parseInt(nextThreeDigits, 10) <= 49) || nextThreeDigits === '5')
+    //isolate indices 1, 2 or 1, 2, 3
+    var nextTwoDigits = cardNumber.substring(1,3);
+    var nextThreeDigits = cardNumber.substring(1,4);
+    //test if these are 011, 44-49, or 5
+    if(nextThreeDigits === '011' || (parseInt(nextTwoDigits, 10) >= 44 && parseInt(nextTwoDigits, 10) <= 49) || cardNumber[1] === '5')
     {
       return disName;
     }
