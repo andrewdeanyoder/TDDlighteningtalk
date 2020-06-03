@@ -49,10 +49,11 @@ var detectNetwork = function(cardNumber) {
     return mcName;
   }
   //test for a Discover Card
+  //6011, 644-649, or 65, and a length of 16 or 19.
   //if card length is 16 or 19 and first digit is 6
   else if ((cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '6') {
 
-    //isolate indices 1, 2 or 1, 2, 3
+    //isolate indices 1 & 2 or 1, 2 & 3
     var nextTwoDigits = cardNumber.substring(1,3);
     var nextThreeDigits = cardNumber.substring(1,4);
     //test if these are 011, 44-49, or 5
@@ -62,8 +63,14 @@ var detectNetwork = function(cardNumber) {
     }
   }
   //test for a Maestro
-  else if (true === false) {
-
+    //prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
+  //first test for length
+  else if (cardNumber.length >= 12 && cardNumber.length <= 19) {
+    //then test for prefixes
+    var firstFourDigits = cardNumber.substring(0,5);
+    if (firstFourDigits === '5018' || firstFourDigits === '5020' || firstFourDigits === '5038' || firstFourDigits === '6304') {
+      return maeName;
+    }
   }
   else {
     return 'No Network';
