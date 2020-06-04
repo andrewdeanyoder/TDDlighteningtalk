@@ -17,11 +17,12 @@ var detectNetwork = function(cardNumber) {
   //set card names at beginning, for easy access
   var dcName = "Diner's Club";
   var aeName = 'American Express';
-  var vName = 'Visa';
   var mcName = 'MasterCard';
   var disName = 'Discover';
   var maeName = 'Maestro';
   var cuName = 'China UnionPay';
+  var cardName7 = 'Switch';
+  var vName = 'Visa';
 
   //check if input is a string
   if(typeof cardNumber !== 'string'){
@@ -40,10 +41,6 @@ var detectNetwork = function(cardNumber) {
   //test for an American Express card
   else if (cardNumber.length === 15 && cardNumber[0] === '3' && (cardNumber[1] === '4' || cardNumber[1] === '7')) {
     return aeName;
-  }
-  //test for a Visa
-  else if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
-    return vName;
   }
   //test for a MasterCard
   else if(cardNumber.length === 16 && cardNumber[0] === '5' && parseInt(cardNumber[1],10) >= 1 && parseInt(cardNumber[1],10) <= 5) {
@@ -68,8 +65,8 @@ var detectNetwork = function(cardNumber) {
   //first test for length
   if (cardNumber.length >= 12 && cardNumber.length <= 19) {
     //then test for prefixes
-    var firstFourDigits = cardNumber.substring(0,4);
-    if (firstFourDigits === '5018' || firstFourDigits === '5020' || firstFourDigits === '5038' || firstFourDigits === '6304') {
+    var firstFourDigitsMaestro = cardNumber.substring(0,4);
+    if (firstFourDigitsMaestro === '5018' || firstFourDigitsMaestro === '5020' || firstFourDigitsMaestro === '5038' || firstFourDigitsMaestro === '6304') {
       return maeName;
     }
   }
@@ -85,6 +82,25 @@ var detectNetwork = function(cardNumber) {
     if ((firstSixDigitsUnion >= 622126 && firstSixDigitsUnion <= 622925) || (firstThreeDigitsUnion >= 624 && firstThreeDigitsUnion <= 626) || (firstFourDigitsUnion >= 6282 && firstFourDigitsUnion <= 6288)) {
       return cuName;
     }
+  }
+
+  //test for Switch
+  //length of 16, 18, or 19
+  //prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
+  //test the length
+  if (cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19) {
+    //find first four digits and first six digits
+    var firstFourDigitsSwitch = cardNumber.substring(0,4);
+    var firstSixDigitsSwitch = cardNumber.substring(0,6);
+    //test the digits
+    if(firstFourDigitsSwitch === '4903' || firstFourDigitsSwitch === '4905' || firstFourDigitsSwitch === '4911' || firstFourDigitsSwitch === '4936' ||firstFourDigitsSwitch === '6333' || firstFourDigitsSwitch === '6759' || firstSixDigitsSwitch === '564182' || firstSixDigitsSwitch === '633110') {
+      return cardName7;
+    }
+  }
+
+  //test for a Visa
+  else if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
+    return vName;
   }
   else {
     return 'No Network';
