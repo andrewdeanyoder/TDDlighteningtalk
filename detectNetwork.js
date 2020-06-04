@@ -15,14 +15,14 @@ var detectNetwork = function(cardNumber) {
   // Once you've read this, go ahead and try to implement this function, then return to the console.
 
   //set card names at beginning, for easy access
-  var dcName = "Diner's Club";
-  var aeName = 'American Express';
-  var mcName = 'MasterCard';
-  var disName = 'Discover';
-  var maeName = 'Maestro';
-  var cuName = 'China UnionPay';
+  var cardName1 = "Diner's Club";
+  var cardName2 = 'American Express';
+  var cardName3 = 'MasterCard';
+  var cardName4 = 'Discover';
+  var cardName5 = 'Maestro';
+  var cardName6 = 'China UnionPay';
   var cardName7 = 'Switch';
-  var vName = 'Visa';
+  var cardName8 = 'Visa';
 
   //check if input is a string
   if(typeof cardNumber !== 'string'){
@@ -36,18 +36,18 @@ var detectNetwork = function(cardNumber) {
 
   //test for a Diner's Club card
   if(cardNumber.length === 14 && cardNumber[0] === '3' && (cardNumber[1] === '8' || cardNumber[1] === '9')) {
-    return dcName;
+    return cardName1;
   }
   //test for an American Express card
   else if (cardNumber.length === 15 && cardNumber[0] === '3' && (cardNumber[1] === '4' || cardNumber[1] === '7')) {
-    return aeName;
+    return cardName2;
   }
   //test for a MasterCard
   else if(cardNumber.length === 16 && cardNumber[0] === '5' && parseInt(cardNumber[1],10) >= 1 && parseInt(cardNumber[1],10) <= 5) {
-    return mcName;
+    return cardName3;
   }
   //test for a Discover Card
-  //6011, 644-649, or 65, and a length of 16 or 19.
+    //6011, 644-649, or 65, and a length of 16 or 19.
   //if card length is 16 or 19 and first digit is 6
   else if ((cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '6') {
 
@@ -57,7 +57,7 @@ var detectNetwork = function(cardNumber) {
     //test if these are 011, 44-49, or 5
     if(nextThreeDigits === '011' || (parseInt(nextTwoDigits, 10) >= 44 && parseInt(nextTwoDigits, 10) <= 49) || cardNumber[1] === '5')
     {
-      return disName;
+      return cardName4;
     }
   }
   //test for a Maestro
@@ -67,12 +67,12 @@ var detectNetwork = function(cardNumber) {
     //then test for prefixes
     var firstFourDigitsMaestro = cardNumber.substring(0,4);
     if (firstFourDigitsMaestro === '5018' || firstFourDigitsMaestro === '5020' || firstFourDigitsMaestro === '5038' || firstFourDigitsMaestro === '6304') {
-      return maeName;
+      return cardName5;
     }
   }
 
   //test for China UnionPay
-  //prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+    //prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
   //first test for length
   if (cardNumber.length >= 16 && cardNumber.length <= 19) {
     var firstSixDigitsUnion = parseInt(cardNumber.substring(0,6), 10);
@@ -80,13 +80,13 @@ var detectNetwork = function(cardNumber) {
     var firstFourDigitsUnion = parseInt(cardNumber.substring(0,4), 10);
     //then test prefixes
     if ((firstSixDigitsUnion >= 622126 && firstSixDigitsUnion <= 622925) || (firstThreeDigitsUnion >= 624 && firstThreeDigitsUnion <= 626) || (firstFourDigitsUnion >= 6282 && firstFourDigitsUnion <= 6288)) {
-      return cuName;
+      return cardName6;
     }
   }
 
   //test for Switch
-  //length of 16, 18, or 19
-  //prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
+    //length of 16, 18, or 19
+    //prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
   //test the length
   if (cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19) {
     //find first four digits and first six digits
@@ -98,9 +98,9 @@ var detectNetwork = function(cardNumber) {
     }
   }
 
-  //test for a Visa
+  //test for Visa
   if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
-    return vName;
+    return cardName8;
   }
   else {
     return 'No Network';

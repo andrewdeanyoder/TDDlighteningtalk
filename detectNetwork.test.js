@@ -7,7 +7,7 @@
 // other places in this file where you'll replace the FILL_ME_IN with a
 // different value.
 var FILL_ME_IN = 'Fill this value in';
-
+/*
 describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   // A Mocha test is just a function!
   // If the function throws an error when run, it fails.
@@ -36,10 +36,9 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
       throw new Error('10 should be even!');
     }
   });
-});
+}); */
 
 describe('Diner\'s Club', function() {
-  // Be careful, tests can have bugs too...
 
   it('has a prefix of 38 and a length of 14', function() {
     if (detectNetwork('38345678901234') !== 'Diner\'s Club') {
@@ -56,8 +55,6 @@ describe('Diner\'s Club', function() {
 });
 
 describe('American Express', function() {
-  // It can get annoying to keep typing the if/throw, so here is a
-  // helper function to throw an error if the input statement isn't true.
   var assert = function(isTrue) {
     if(!isTrue) {
       throw new Error('Test failed');
@@ -74,10 +71,6 @@ describe('American Express', function() {
 });
 
 describe('Visa', function() {
-  // Chai is an entire library of helper functions for tests!
-  // Chai provides an assert that acts the same as our previous assert.
-  // Search the documentation to figure out how to access it.
-  //   http://chaijs.com/
   var assert = chai.assert;
 
   it('has a prefix of 4 and a length of 13', function() {
@@ -94,10 +87,6 @@ describe('Visa', function() {
 });
 
 describe('MasterCard', function() {
-  // Chai lets you write more human-readable tests that throw helpful errors.
-  // Expect syntax is one way to do this, but there are others.
-  // If you want to know more, check out the documentation.
-  //   http://chaijs.com/api/bdd/
   var expect = chai.should();
 
   it('has a prefix of 51 and length of 16', function() {
@@ -112,13 +101,6 @@ describe('MasterCard', function() {
     detectNetwork('5312345678901234').should.equal('MasterCard');
   });
 
-  // You can also use should instead of expect, which changes the style
-  // slightly. It really doesn't matter which one you use - check out
-  // http://chaijs.com/guide/styles/ for more info, but it's important
-  // to be consistent (unlike in this file, where we use BOTH expect
-  // and should, but that's just for learning), so once you've gotten
-  // these tests to pass using should syntax, refactor your tests to
-  // use either expect or should, but not both.
   var should = chai.should();
 
   it('has a prefix of 54 and a length of 16', function() {
@@ -131,8 +113,6 @@ describe('MasterCard', function() {
 });
 
 describe('Discover', function() {
-  // Tests without a function will be marked as "pending" and not run
-  // Implement these tests (and others) and make them pass!
   // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
 
   it('has a prefix of 6011 and a length of 16', function() {
@@ -165,16 +145,17 @@ describe('Discover', function() {
   })
 });
 
-//Maestro always has a length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
+//Maestro tests
+//length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
 describe('Maestro', function() {
   //empty digits after the prefix
   var accumulator = '0000000';
   //iterate through the possible lengths
   for(var l = 12; l <= 19; l++) {
-    //increase the length of the accumulator
+    //add another empty digit so that accumulator is the correct length
     accumulator += '0';
     (function (l, accumulator) {
-      //add another empty digit so that accumulator is the correct length
+      //test all prefixes
       it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
         var cardNum1 = '5018' + accumulator;
         //console.log(l, accumulator, accumulator.length, cardNum1, cardNum1.length);
@@ -202,10 +183,9 @@ describe('Maestro', function() {
   }
 });
 
-//tests for China UnionPay
 //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
 describe('China UnionPay', function() {
-  var cardName = 'China UnionPay';
+  var cardName1 = 'China UnionPay';
   //empty digits after the prefix
   var emptyDigits = '000000000';
   //iterate through the possible lengths
@@ -218,11 +198,7 @@ describe('China UnionPay', function() {
       (function (l, prefix1, emptyDigits) {
         //call it() on prefix1 add an additional 3 digits + emptyDigits
         it('has a prefix of ' + prefix1 + ' and a length of ' + l, function() {
-
-          /*TODO delete console.log
-          var cardNum1 = prefix1.toString() + '000'+ emptyDigits;
-          console.log(cardNum1, cardNum1.length); */
-          detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName);
+          detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName1);
         });
       }) (l, prefix1, emptyDigits);
     }
@@ -233,10 +209,7 @@ describe('China UnionPay', function() {
       (function (l, prefix2, emptyDigits) {
         //call it() on prefix2 add an additional 2 digits + emptyDigits
         it('has a prefix of ' + prefix2 + ' and a length of ' + l, function() {
-          /*TODO delete console.log
-          var cardNum2 = prefix2.toString() + '00'+ emptyDigits;
-          console.log(cardNum2, cardNum2.length); */
-          detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName);
+          detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName1);
         });
       }) (l, prefix2, emptyDigits);
     }
@@ -247,10 +220,7 @@ describe('China UnionPay', function() {
       (function (l, prefix3, emptyDigits) {
         //call it() on prefix3 add emptyDigits
         it('has a prefix of ' + prefix3 + ' and a length of ' + l, function() {
-          /*TODO delete console.log
-          var cardNum3 = prefix3.toString() + emptyDigits;
-          console.log(cardNum3, cardNum3.length); */
-          detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName);
+          detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName1);
         });
       }) (l, prefix3, emptyDigits);
     }
@@ -263,7 +233,7 @@ describe('China UnionPay', function() {
 
 describe('Switch', function() {
   //cardName
-  var cardName = 'Switch';
+  var cardName2 = 'Switch';
   //establish arrays of lengths and prefixes
   var possibleLengths = [16, 18, 19];
   var possiblePrefixes = ['4903', '4905', '4911', '4936', '6333', '6759', '564182', '633110'];
@@ -277,13 +247,11 @@ describe('Switch', function() {
       for (var k = 1; k <= (possibleLengths[i] - possiblePrefixes[j].length - 10); k++) {
         emptyDigits1 += k.toString();
       }
-      //TODO delete devtest
-      //console.log("Switch test:", i, j, k, cardNum5, cardNum5.length);
       //wrap function
       (function (i, j, emptyDigits1) {
         //call it() on prefix + emptyDigits
         it('has a prefix of ' + possiblePrefixes[j] + ' and a length of ' + possibleLengths[i], function() {
-          detectNetwork(possiblePrefixes[j] + emptyDigits1).should.equal(cardName);
+          detectNetwork(possiblePrefixes[j] + emptyDigits1).should.equal(cardName2);
         });
       }) (i, j, emptyDigits1);
     }
