@@ -201,7 +201,7 @@ describe('Maestro', function() {
     })(l, accumulator)
   }
 });
-/*
+
 //tests for China UnionPay
 //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
 describe('China UnionPay', function() {
@@ -221,7 +221,7 @@ describe('China UnionPay', function() {
 
           /*TODO delete console.log
           var cardNum1 = prefix1.toString() + '000'+ emptyDigits;
-          console.log(cardNum1, cardNum1.length); */ /*
+          console.log(cardNum1, cardNum1.length); */
           detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix1, emptyDigits);
@@ -235,7 +235,7 @@ describe('China UnionPay', function() {
         it('has a prefix of ' + prefix2 + ' and a length of ' + l, function() {
           /*TODO delete console.log
           var cardNum2 = prefix2.toString() + '00'+ emptyDigits;
-          console.log(cardNum2, cardNum2.length); */ /*
+          console.log(cardNum2, cardNum2.length); */
           detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix2, emptyDigits);
@@ -249,13 +249,13 @@ describe('China UnionPay', function() {
         it('has a prefix of ' + prefix3 + ' and a length of ' + l, function() {
           /*TODO delete console.log
           var cardNum3 = prefix3.toString() + emptyDigits;
-          console.log(cardNum3, cardNum3.length); */ /*
+          console.log(cardNum3, cardNum3.length); */
           detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix3, emptyDigits);
     }
   }
-}); */
+});
 
 //test for Switch
 //length of 16, 18, or 19
@@ -277,10 +277,15 @@ describe('Switch', function() {
       for (var k = 1; k <= (possibleLengths[i] - possiblePrefixes[j].length - 10); k++) {
         emptyDigits1 += k.toString();
       }
-      var cardNum5 = possiblePrefixes[j] + emptyDigits1;
-      console.log("Switch test:", i, j, k, cardNum5, cardNum5.length);
+      //TODO delete devtest
+      //console.log("Switch test:", i, j, k, cardNum5, cardNum5.length);
       //wrap function
+      (function (i, j, emptyDigits1) {
         //call it() on prefix + emptyDigits
+        it('has a prefix of ' + possiblePrefixes[j] + ' and a length of ' + possibleLengths[i], function() {
+          detectNetwork(possiblePrefixes[j] + emptyDigits1).should.equal(cardName);
+        });
+      }) (i, j, emptyDigits1);
     }
   }
 
