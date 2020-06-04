@@ -99,7 +99,7 @@ var detectNetwork = function(cardNumber) {
   }
 
   //test for a Visa
-  else if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
+  if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
     return vName;
   }
   else {
