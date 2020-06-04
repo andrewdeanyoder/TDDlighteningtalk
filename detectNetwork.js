@@ -21,6 +21,7 @@ var detectNetwork = function(cardNumber) {
   var mcName = 'MasterCard';
   var disName = 'Discover';
   var maeName = 'Maestro';
+  var cuName = 'China UnionPay';
 
   //check if input is a string
   if(typeof cardNumber !== 'string'){
@@ -70,6 +71,19 @@ var detectNetwork = function(cardNumber) {
     var firstFourDigits = cardNumber.substring(0,4);
     if (firstFourDigits === '5018' || firstFourDigits === '5020' || firstFourDigits === '5038' || firstFourDigits === '6304') {
       return maeName;
+    }
+  }
+
+  //test for China UnionPay
+  //prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+  //first test for length
+  if (cardNumber.length >= 16 && cardNumber.length <= 19) {
+    var firstSixDigitsUnion = parseInt(cardNumber.substring(0,6), 10);
+    var firstThreeDigitsUnion = parseInt(cardNumber.substring(0,3), 10);
+    var firstFourDigitsUnion = parseInt(cardNumber.substring(0,4), 10);
+    //then test prefixes
+    if ((firstSixDigitsUnion >= 622126 && firstSixDigitsUnion <= 622925) || (firstThreeDigitsUnion >= 624 && firstThreeDigitsUnion <= 626) || (firstFourDigitsUnion >= 6282 && firstFourDigitsUnion <= 6288)) {
+      return cuName;
     }
   }
   else {
