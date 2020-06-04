@@ -37,6 +37,7 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
     }
   });
 });
+
 describe('Diner\'s Club', function() {
   // Be careful, tests can have bugs too...
 
@@ -204,37 +205,60 @@ describe('Maestro', function() {
     })(l, accumulator)
   }
 
-  //tests for China UnionPay
-  //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
-  describe('China UnionPay', function(){
-    var cardName = 'China UnionPay';
-    //empty digits after the prefix
-    var emptyDigits = '000000000';
-    //iterate through the possible lengths
-    for(var l = 16; l <= 19; l++) {
-      //increase the length of the empty digits
-      emptyDigits += 0;
-          //loop through the 624 prefixes
-          for (var prefix1 = 624; prefix1 <= 626; prefix1++) {
-            //wrap function
-            (function (l, prefix1, emptyDigits) {
-              //call it() on prefix1 add an additional 3 digits + emptyDigits
-              it('has a prefix of ' + prefix1 + ' and a length of ' + l, function() {
-                //TODO delete console.log
-                console.log(prefix1.toString() + '000' + emptyDigits);
-                detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName);
-              });
-            }) (l, prefix1, emptyDigits);
-          }
-          //loop through 6282 prefixes
-            //wrap function
-              //for 6282 add an additional 2 digits + emptyDigits
-          //loop through 622126
-            //wrap function
-              //for 622126 add emptyDigits
+//tests for China UnionPay
+//length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
+describe('China UnionPay', function() {
+  var cardName = 'China UnionPay';
+  //empty digits after the prefix
+  var emptyDigits = '000000000';
+  //iterate through the possible lengths
+  for(var l = 16; l <= 19; l++) {
+    //increase the length of the empty digits
+    emptyDigits += 0;
+    //loop through the 624 prefixes
+    for (var prefix1 = 624; prefix1 <= 626; prefix1++) {
+      //wrap function
+      (function (l, prefix1, emptyDigits) {
+        //call it() on prefix1 add an additional 3 digits + emptyDigits
+        it('has a prefix of ' + prefix1 + ' and a length of ' + l, function() {
 
+          /*TODO delete console.log
+          var cardNum1 = prefix1.toString() + '000'+ emptyDigits;
+          console.log(cardNum1, cardNum1.length); */
+          detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName);
+        });
+      }) (l, prefix1, emptyDigits);
     }
-  });
+
+    //loop through 6282 prefixes
+    for (var prefix2 = 6282; prefix2 <= 6288; prefix2++) {
+      //wrap function
+      (function (l, prefix2, emptyDigits) {
+        //call it() on prefix2 add an additional 2 digits + emptyDigits
+        it('has a prefix of ' + prefix2 + ' and a length of ' + l, function() {
+          /*TODO delete console.log
+          var cardNum2 = prefix2.toString() + '00'+ emptyDigits;
+          console.log(cardNum2, cardNum2.length); */
+          detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName);
+        });
+      }) (l, prefix2, emptyDigits);
+    }
+
+    //loop through 622126 prefixes
+    for (var prefix3 = 622126; prefix3 <= 622925; prefix3++) {
+      //wrap function
+      (function (l, prefix3, emptyDigits) {
+        //call it() on prefix3 add emptyDigits
+        it('has a prefix of ' + prefix3 + ' and a length of ' + l, function() {
+          /*TODO delete console.log
+          var cardNum3 = prefix3.toString() + emptyDigits;
+          console.log(cardNum3, cardNum3.length); */
+          detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName);
+        });
+      }) (l, prefix3, emptyDigits);
+    }
+  }
+});
 
 });
 
