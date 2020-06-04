@@ -174,25 +174,33 @@ describe('Maestro', function() {
   var accumulator = '0000000';
   //iterate through the possible lengths
   for(var l = 12; l <= 19; l++) {
-    (function (l) {
+    accumulator += '0';
+    (function (l, accumulator) {
       //add another empty digit so that accumulator is the correct length
-      accumulator += '0';
       it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
+        var cardNum1 = '5018' + accumulator;
+        //console.log(l, accumulator, accumulator.length, cardNum1, cardNum1.length);
         detectNetwork('5018' + accumulator).should.equal('Maestro');
       });
 
       it('has a prefix of ' + 5020 + ' and a length of ' + l, function() {
+        var cardNum2 = '5020' + accumulator;
+        //console.log(l, accumulator, accumulator.length, cardNum2, cardNum2.length);
         detectNetwork('5020' + accumulator).should.equal('Maestro');
       });
 
       it('has a prefix of ' + 5038 + ' and a length of ' + l, function() {
+        var cardNum3 = '5038' + accumulator;
+        //console.log(l, accumulator, accumulator.length, cardNum3, cardNum3.length);
         detectNetwork('5038' + accumulator).should.equal('Maestro');
       });
 
       it('has a prefix of ' + 6304 + ' and a length of ' + l, function() {
+        var cardNum4 = '6304' + accumulator;
+        //console.log(l, accumulator, accumulator.length, cardNum4, cardNum4.length);
         detectNetwork('6304' + accumulator).should.equal('Maestro');
       });
-    })(l)
+    })(l, accumulator)
   }
 
 });
