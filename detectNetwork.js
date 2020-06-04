@@ -67,7 +67,7 @@ var detectNetwork = function(cardNumber) {
   //first test for length
   else if (cardNumber.length >= 12 && cardNumber.length <= 19) {
     //then test for prefixes
-    var firstFourDigits = cardNumber.substring(0,5);
+    var firstFourDigits = cardNumber.substring(0,4);
     if (firstFourDigits === '5018' || firstFourDigits === '5020' || firstFourDigits === '5038' || firstFourDigits === '6304') {
       return maeName;
     }
