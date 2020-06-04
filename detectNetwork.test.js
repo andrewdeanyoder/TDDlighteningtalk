@@ -146,13 +146,16 @@ describe('Discover', function() {
   })
 
   for (var prefix = 644; prefix <= 649; prefix++) {
-    it('has a prefix of ' + prefix + ' and a length of 16', function() {
-      detectNetwork(prefix.toString() + '4567890123456').should.equal('Discover');
-    });
+    (function (prefix) {
+      var firstFour = prefix.toString();
+      it('has a prefix of ' + prefix + ' and a length of 16', function() {
+        detectNetwork(firstFour + '4567890123456').should.equal('Discover');
+      });
 
-    it('has a prefix of ' + prefix + ' and a length of 19', function() {
-      detectNetwork(prefix.toString() + '4567890123456789').should.equal('Discover');
-    })
+      it('has a prefix of ' + prefix + ' and a length of 19', function() {
+        detectNetwork(firstFour + '4567890123456789').should.equal('Discover');
+      })
+    }) (prefix);
   }
 
   it('has a prefix of 65 and a length of 16', function() {
@@ -171,23 +174,25 @@ describe('Maestro', function() {
   var accumulator = '0000000';
   //iterate through the possible lengths
   for(var l = 12; l <= 19; l++) {
-    //add another empty digit
-    accumulator += '0';
-    it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
-      detectNetwork('5018' + accumulator).should.equal('Maestro');
-    });
+    (function (l) {
+      //add another empty digit so that accumulator is the correct length
+      accumulator += '0';
+      it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
+        detectNetwork('5018' + accumulator).should.equal('Maestro');
+      });
 
-    it('has a prefix of ' + 5020 + ' and a length of ' + l, function() {
-      detectNetwork('5020' + accumulator).should.equal('Maestro');
-    });
+      it('has a prefix of ' + 5020 + ' and a length of ' + l, function() {
+        detectNetwork('5020' + accumulator).should.equal('Maestro');
+      });
 
-    it('has a prefix of ' + 5038 + ' and a length of ' + l, function() {
-      detectNetwork('5038' + accumulator).should.equal('Maestro');
-    });
+      it('has a prefix of ' + 5038 + ' and a length of ' + l, function() {
+        detectNetwork('5038' + accumulator).should.equal('Maestro');
+      });
 
-    it('has a prefix of ' + 6304 + ' and a length of ' + l, function() {
-      detectNetwork('6304' + accumulator).should.equal('Maestro');
-    });
+      it('has a prefix of ' + 6304 + ' and a length of ' + l, function() {
+        detectNetwork('6304' + accumulator).should.equal('Maestro');
+      });
+    })(l)
   }
 
 });
