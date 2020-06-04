@@ -80,7 +80,6 @@ describe('Visa', function() {
   //   http://chaijs.com/
   var assert = chai.assert;
 
-
   it('has a prefix of 4 and a length of 13', function() {
     assert(detectNetwork('4123456789012') === 'Visa');
   });
@@ -113,7 +112,6 @@ describe('MasterCard', function() {
     detectNetwork('5312345678901234').should.equal('MasterCard');
   });
 
-
   // You can also use should instead of expect, which changes the style
   // slightly. It really doesn't matter which one you use - check out
   // http://chaijs.com/guide/styles/ for more info, but it's important
@@ -130,7 +128,6 @@ describe('MasterCard', function() {
   it('has a prefix of 55 and a length of 16', function() {
     detectNetwork('5512345678901234').should.equal('MasterCard');
   })
-
 });
 
 describe('Discover', function() {
@@ -166,7 +163,6 @@ describe('Discover', function() {
   it('has a prefix of 65 and a length of 19', function() {
     detectNetwork('6534567890123456789').should.equal('Discover');
   })
-
 });
 
 //Maestro always has a length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
@@ -204,7 +200,8 @@ describe('Maestro', function() {
       });
     })(l, accumulator)
   }
-
+});
+/*
 //tests for China UnionPay
 //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
 describe('China UnionPay', function() {
@@ -224,7 +221,7 @@ describe('China UnionPay', function() {
 
           /*TODO delete console.log
           var cardNum1 = prefix1.toString() + '000'+ emptyDigits;
-          console.log(cardNum1, cardNum1.length); */
+          console.log(cardNum1, cardNum1.length); */ /*
           detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix1, emptyDigits);
@@ -238,7 +235,7 @@ describe('China UnionPay', function() {
         it('has a prefix of ' + prefix2 + ' and a length of ' + l, function() {
           /*TODO delete console.log
           var cardNum2 = prefix2.toString() + '00'+ emptyDigits;
-          console.log(cardNum2, cardNum2.length); */
+          console.log(cardNum2, cardNum2.length); */ /*
           detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix2, emptyDigits);
@@ -252,13 +249,39 @@ describe('China UnionPay', function() {
         it('has a prefix of ' + prefix3 + ' and a length of ' + l, function() {
           /*TODO delete console.log
           var cardNum3 = prefix3.toString() + emptyDigits;
-          console.log(cardNum3, cardNum3.length); */
+          console.log(cardNum3, cardNum3.length); */ /*
           detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName);
         });
       }) (l, prefix3, emptyDigits);
     }
   }
-});
+}); */
+
+//test for Switch
+//length of 16, 18, or 19
+//prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
+
+describe('Switch', function() {
+  //cardName
+  var cardName = 'Switch';
+  //establish arrays of lengths and prefixes
+  var possibleLengths = [16, 18, 19];
+  var possiblePrefixes = ['4903', '4905', '4911', '4936', '6333', '6759', '564182', '633110'];
+  //iterate over possible lengths
+  for (var i = 0; i < possibleLengths.length; i++) {
+    //iterate over the possible prefixes
+    for (var j = 0; j < possiblePrefixes.length; j++) {
+      //establish the emptyDigits string (current Length - prefix.length)
+      var emptyDigits1 = '0000000000' //one less than minimum number of empty digits needed === 11;
+      //add the necessary number of empty digits for this prefix and length
+      for (var k = 1; k <= (possibleLengths[i] - possiblePrefixes[j].length - 10); k++) {
+        emptyDigits1 += k.toString();
+      }
+      var cardNum5 = possiblePrefixes[j] + emptyDigits1;
+      console.log("Switch test:", i, j, k, cardNum5, cardNum5.length);
+      //wrap function
+        //call it() on prefix + emptyDigits
+    }
+  }
 
 });
-
