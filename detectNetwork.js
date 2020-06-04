@@ -65,7 +65,7 @@ var detectNetwork = function(cardNumber) {
   //test for a Maestro
     //prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
   //first test for length
-  else if (cardNumber.length >= 12 && cardNumber.length <= 19) {
+  if (cardNumber.length >= 12 && cardNumber.length <= 19) {
     //then test for prefixes
     var firstFourDigits = cardNumber.substring(0,4);
     if (firstFourDigits === '5018' || firstFourDigits === '5020' || firstFourDigits === '5038' || firstFourDigits === '6304') {
@@ -76,5 +76,3 @@ var detectNetwork = function(cardNumber) {
     return 'No Network';
   }
 };
-
-

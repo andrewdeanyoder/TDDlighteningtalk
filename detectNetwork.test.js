@@ -177,6 +177,17 @@ describe('Maestro', function() {
       detectNetwork('5018' + accumulator).should.equal('Maestro');
     });
 
+    it('has a prefix of ' + 5020 + ' and a length of ' + l, function() {
+      detectNetwork('5020' + accumulator).should.equal('Maestro');
+    });
+
+    it('has a prefix of ' + 5038 + ' and a length of ' + l, function() {
+      detectNetwork('5038' + accumulator).should.equal('Maestro');
+    });
+
+    it('has a prefix of ' + 6304 + ' and a length of ' + l, function() {
+      detectNetwork('6304' + accumulator).should.equal('Maestro');
+    });
   }
 
 });
