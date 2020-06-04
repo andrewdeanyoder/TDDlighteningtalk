@@ -165,7 +165,19 @@ describe('Discover', function() {
 
 });
 
+//Maestro always has a length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
 describe('Maestro', function() {
-  // Write full test coverage for the Maestro card
+  //empty digits after the prefix
+  var accumulator = '0000000';
+  //iterate through the possible lengths
+  for(var l = 12; l <= 19; l++) {
+    //add another empty digit
+    accumulator += '0';
+    it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
+      detectNetwork('5018' + accumulator).should.equal('Maestro');
+    });
+
+  }
+
 });
 
