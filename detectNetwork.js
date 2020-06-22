@@ -61,7 +61,7 @@ var detectNetwork = function(cardNumber) {
   }
 
 
-  //get first four digits for Discover prefix
+  //get first four digits for Discover & Maestro prefix
   var prefix = cardNumber.substring(0, 4);
 
   //helper function for a Discover Card
@@ -88,15 +88,22 @@ var detectNetwork = function(cardNumber) {
     return cardnames[3];
   }
 
-  //test for a Maestro
+  //helper function for a Maestro
     //prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
-  //first test for length
-  if (cardNumber.length >= 12 && cardNumber.length <= 19) {
-    //then test for prefixes
-    var firstFourDigitsMaestro = cardNumber.substring(0,4);
-    if (firstFourDigitsMaestro === '5018' || firstFourDigitsMaestro === '5020' || firstFourDigitsMaestro === '5038' || firstFourDigitsMaestro === '6304') {
-      return cardnames[4];
+  var isMaestro = function (prefix, length) {
+    //first test for length
+    if (length >= 12 && length <= 19) {
+      if(prefix === '5018' || prefix === '5020' || prefix === '5038' || prefix === '6304') {
+        return true;
+      } else {
+        return false;
+      }
     }
+  }
+
+  //test for Maestro - reminder prefix was already set
+  if(isMaestro(prefix, cardNumber.length)) {
+    return cardnames[4];
   }
 
   //test for China UnionPay
