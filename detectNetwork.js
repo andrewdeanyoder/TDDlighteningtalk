@@ -27,23 +27,36 @@ var detectNetwork = function(cardNumber) {
     return 'not a number formatted as a string';
   }
 
-  //test for a Diner's Club card
+  //helper function for Diner's Club card
   var isDinersClub = function (prefix, length) {
     return (prefix === '38' || prefix === '39') && length === 14;
   }
 
+  //test for Diner's club
   if(isDinersClub(cardNumber.substring(0, 2), cardNumber.length)) {
     return cardnames[0];
   }
 
-    //cardNumber.length === 14 && cardNumber[0] === '3' && (cardNumber[1] === '8' || cardNumber[1] === '9'))
+  //helper function for an American Express card
+  var isAmExpress = function (prefix, length) {
+    return (prefix === '34' || prefix === '37') && length === 15;
+  }
 
-  //test for an American Express card
-  else if (cardNumber.length === 15 && cardNumber[0] === '3' && (cardNumber[1] === '4' || cardNumber[1] === '7')) {
+  //test for American Express
+  if(isAmExpress(cardNumber.substring(0, 2), cardNumber.length)) {
     return cardnames[1];
   }
-  //test for a MasterCard
-  else if(cardNumber.length === 16 && cardNumber[0] === '5' && parseInt(cardNumber[1],10) >= 1 && parseInt(cardNumber[1],10) <= 5) {
+
+  //helper function for MasterCard
+  var isMasterCard = function (prefix, length) {
+    return prefix >= 51 && prefix <= 55 && length === 16;
+  }
+
+  //convert first two digits to a number
+  var prefix = parseInt(cardNumber.substring(0, 2), 10);
+
+  //Test for Mastercard
+  if(isMasterCard(prefix, cardNumber.length)) {
     return cardnames[2];
   }
 
