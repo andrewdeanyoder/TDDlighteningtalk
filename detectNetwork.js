@@ -60,20 +60,34 @@ var detectNetwork = function(cardNumber) {
     return cardnames[2];
   }
 
-  //test for a Discover Card
-    //6011, 644-649, or 65, and a length of 16 or 19.
-  //if card length is 16 or 19 and first digit is 6
-  else if ((cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '6') {
 
-    //isolate indices 1 & 2 or 1, 2 & 3
-    var nextTwoDigits = cardNumber.substring(1,3);
-    var nextThreeDigits = cardNumber.substring(1,4);
-    //test if these are 011, 44-49, or 5
-    if(nextThreeDigits === '011' || (parseInt(nextTwoDigits, 10) >= 44 && parseInt(nextTwoDigits, 10) <= 49) || cardNumber[1] === '5')
-    {
-      return cardnames[3];
+  //get first four digits for Discover prefix
+  var prefix = cardNumber.substring(0, 4);
+
+  //helper function for a Discover Card
+    //prefix: 6011, 644-649, or 65, and a length of 16 or 19.
+  var isDiscover = function (prefix, length) {
+    //test the length
+    if (length === 16 || length === 19) {
+
+      //isolate certain digits of the prefix
+      var firstTwoDigits = prefix.substring(0,2);
+      var firstThreeDigits = parseInt(prefix.substring(0,3), 10);
+
+      //test the prefix
+      if(prefix === '6011' || (firstThreeDigits >= 644 && firstThreeDigits <= 649) || firstTwoDigits === '65') {
+        return true;
+      }
+    } else {
+      return false;
     }
   }
+
+  //test for Discover
+  if(isDiscover(prefix, cardNumber.length)) {
+    return cardnames[3];
+  }
+
   //test for a Maestro
     //prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
   //first test for length
