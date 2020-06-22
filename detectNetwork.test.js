@@ -112,6 +112,7 @@ describe('MasterCard', function() {
   })
 });
 
+
 describe('Discover', function() {
   // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
 
@@ -144,6 +145,8 @@ describe('Discover', function() {
     detectNetwork('6534567890123456789').should.equal('Discover');
   })
 });
+
+
 
 //Maestro tests
 //length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
@@ -182,6 +185,7 @@ describe('Maestro', function() {
     })(l, accumulator)
   }
 });
+
 
 //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
 describe('China UnionPay', function() {
@@ -226,6 +230,7 @@ describe('China UnionPay', function() {
     }
   }
 });
+
 
 //test for Switch
 //length of 16, 18, or 19
