@@ -1,42 +1,11 @@
-/*
- * You'll eventually be given instructions how to use this file
- * If you want to use it before then, you'll have to figure it out yourself
- */
 
-// You don't actually want to fill *this* value in on line 9, but you'll see
-// other places in this file where you'll replace the FILL_ME_IN with a
-// different value.
-var FILL_ME_IN = 'Fill this value in';
 /*
 describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   // A Mocha test is just a function!
   // If the function throws an error when run, it fails.
   // If it doesn't throw an error when run, it doesn't fail.
   // To read more about mocha, visit mochajs.org
-
-  // Once you've read and understood this section, please comment it out.
-  // You will not be able to proceed with a failing test.
-
-  it('Doesn\'t throw an error, so it doesn\'t fail', function() {
-    // This test doesn't really test anything at all! It will pass no matter what.
-    var even = function(num){
-      return num/2 === 0;
-    }
-    return even(10) === true;
-  });
-
-  // In tests, we want to compare the expected behavior to the actual behavior.
-  // A test should only fail if the expected behavior doesn't match the actual.
-  it('Throws an error when expected behavior does not match actual behavior', function() {
-    var even = function(num){
-      return num % 2 === 0;
-    }
-
-    if(even(10) !== true) {
-      throw new Error('10 should be even!');
-    }
-  });
-}); */
+*/
 
 describe('American Express', function() {
   var assert = function(isTrue) {
@@ -54,22 +23,78 @@ describe('American Express', function() {
   });
 });
 
-describe('Visa', function() {
+describe('Visa with assert', function() {
   var assert = chai.assert;
 
+  it('is a string', function () {
+    assert.typeOf(detectNetwork('4123456789012345'), 'string');
+  });
+
+  it('has a length of 4', function () {
+    assert.lengthOf(detectNetwork('4123456789012345'), 4);
+  });
+
   it('has a prefix of 4 and a length of 13', function() {
-    assert(detectNetwork('4123456789012') === 'Visa');
+    assert.equal(detectNetwork('4123456789012'), 'Visa');
   });
 
   it('has a prefix of 4 and a length of 16', function() {
-    assert(detectNetwork('4123456789012345') === 'Visa');
+    assert.equal(detectNetwork('4123456789012345'), 'Visa');
   });
 
   it('has a prefix of 4 and a length of 19', function() {
-    assert(detectNetwork('4123456789012345678') === 'Visa');
+    assert.equal(detectNetwork('4123456789012345678'), 'Visa');
   });
 });
 
+describe('Visa with should', function() {
+  var should = chai.should();
+
+  it('is a string', function () {
+    detectNetwork('4123456789012345').should.be.a('string');
+  });
+
+  it('has a length of 4', function () {
+    detectNetwork('4123456789012345').should.have.a.lengthOf(4);
+  });
+
+  it('has a prefix of 4 and a length of 13', function() {
+    detectNetwork('4123456789012').should.equal('Visa');
+  });
+
+  it('has a prefix of 4 and a length of 16', function() {
+    detectNetwork('4123456789012345').should.equal('Visa');
+  });
+
+  it('has a prefix of 4 and a length of 19', function() {
+    detectNetwork('4123456789012345678').should.equal('Visa');
+  });
+});
+
+describe('Visa with expect', function() {
+  var expect = chai.expect;
+
+  it('is a string', function () {
+    expect(detectNetwork('4123456789012345')).to.be.a('string');
+  });
+
+  it('has a length of 4', function () {
+    expect(detectNetwork('4123456789012345')).to.have.a.lengthOf(4);
+  });
+
+  it('has a prefix of 4 and a length of 13', function() {
+    expect(detectNetwork('4123456789012')).to.equal('Visa');
+  });
+
+  it('has a prefix of 4 and a length of 16', function() {
+    expect(detectNetwork('4123456789012345')).to.equal('Visa');
+  });
+
+  it('has a prefix of 4 and a length of 19', function() {
+    expect(detectNetwork('4123456789012345678')).to.equal('Visa');
+  });
+
+});
 
 describe('Discover', function() {
   // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
