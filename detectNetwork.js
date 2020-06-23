@@ -93,30 +93,36 @@ var detectNetwork = function(cardNumber) {
   var isMaestro = function (prefix, length) {
     //first test for length
     if (length >= 12 && length <= 19) {
-      if(prefix === '5018' || prefix === '5020' || prefix === '5038' || prefix === '6304') {
-        return true;
-      } else {
-        return false;
-      }
+      return prefix === '5018' || prefix === '5020' || prefix === '5038' || prefix === '6304';
+    } else {
+      return false;
     }
   }
 
-  //test for Maestro - reminder prefix was already set
+  //test for Maestro, reminder: prefix was already set around line 64
   if(isMaestro(prefix, cardNumber.length)) {
     return cardnames[4];
   }
 
-  //test for China UnionPay
+  //modify prefix to be first six digits
+  prefix = parseInt(cardNumber.substring(0, 6));
+
+  //helper function for China UnionPay
     //prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
-  //first test for length
-  if (cardNumber.length >= 16 && cardNumber.length <= 19) {
-    var firstSixDigitsUnion = parseInt(cardNumber.substring(0,6), 10);
-    var firstThreeDigitsUnion = parseInt(cardNumber.substring(0,3), 10);
-    var firstFourDigitsUnion = parseInt(cardNumber.substring(0,4), 10);
-    //then test prefixes
-    if ((firstSixDigitsUnion >= 622126 && firstSixDigitsUnion <= 622925) || (firstThreeDigitsUnion >= 624 && firstThreeDigitsUnion <= 626) || (firstFourDigitsUnion >= 6282 && firstFourDigitsUnion <= 6288)) {
-      return cardnames[5];
+    //622126-622925, 624000-626999, 628200-628899
+  var isUnionPay = function (prefix, length) {
+    //first test for length
+    if (length >= 16 && length <= 19) {
+
+      //test prefixes
+      if((prefix >= 622126 && prefix <= 622925) || (prefix >= 624000 && prefix <= 626999) || (prefix >= 628200 && prefix <= 628899)) {
+        return true;
+      }
     }
+  }
+
+  if(isUnionPay(prefix, cardNumber.length)) {
+    return cardnames[5];
   }
 
   //test for Switch
