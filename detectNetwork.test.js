@@ -38,22 +38,6 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
   });
 }); */
 
-describe('Diner\'s Club', function() {
-
-  it('has a prefix of 38 and a length of 14', function() {
-    if (detectNetwork('38345678901234') !== 'Diner\'s Club') {
-      throw new Error('Test failed');
-    }
-  });
-
-  it('has a prefix of 39 and a length of 14', function() {
-    if (detectNetwork('39345678901234') !== 'Diner\'s Club') {
-      throw new Error('Test failed');
-    }
-
-  });
-});
-
 describe('American Express', function() {
   var assert = function(isTrue) {
     if(!isTrue) {
@@ -86,35 +70,11 @@ describe('Visa', function() {
   });
 });
 
-describe('MasterCard', function() {
-  var expect = chai.should();
-
-  it('has a prefix of 51 and length of 16', function() {
-    detectNetwork('5112345678901234').should.equal('MasterCard');
-  });
-
-  it('has a prefix of 52 and length of 16', function() {
-    detectNetwork('5212345678901234').should.equal('MasterCard');
-  });
-
-  it('has a prefix of 53 and length of 16', function() {
-    detectNetwork('5312345678901234').should.equal('MasterCard');
-  });
-
-  var should = chai.should();
-
-  it('has a prefix of 54 and a length of 16', function() {
-    detectNetwork('5412345678901234').should.equal('MasterCard');
-  });
-
-  it('has a prefix of 55 and a length of 16', function() {
-    detectNetwork('5512345678901234').should.equal('MasterCard');
-  })
-});
-
 
 describe('Discover', function() {
   // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
+
+  var should = chai.should();
 
   it('has a prefix of 6011 and a length of 16', function() {
     detectNetwork('6011567890123456').should.equal('Discover');
@@ -145,7 +105,6 @@ describe('Discover', function() {
     detectNetwork('6534567890123456789').should.equal('Discover');
   })
 });
-
 
 
 //Maestro tests
@@ -229,37 +188,4 @@ describe('China UnionPay', function() {
       }) (l, prefix3, emptyDigits);
     }
   }
-});
-
-
-//test for Switch
-//length of 16, 18, or 19
-//prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
-
-describe('Switch', function() {
-  //cardName
-  var cardName2 = 'Switch';
-  //establish arrays of lengths and prefixes
-  var possibleLengths = [16, 18, 19];
-  var possiblePrefixes = ['4903', '4905', '4911', '4936', '6333', '6759', '564182', '633110'];
-  //iterate over possible lengths
-  for (var i = 0; i < possibleLengths.length; i++) {
-    //iterate over the possible prefixes
-    for (var j = 0; j < possiblePrefixes.length; j++) {
-      //establish the emptyDigits string (current Length - prefix.length)
-      var emptyDigits1 = '0000000000' //one less than minimum number of empty digits needed === 11;
-      //add the necessary number of empty digits for this prefix and length
-      for (var k = 1; k <= (possibleLengths[i] - possiblePrefixes[j].length - 10); k++) {
-        emptyDigits1 += k.toString();
-      }
-      //wrap function
-      (function (i, j, emptyDigits1) {
-        //call it() on prefix + emptyDigits
-        it('has a prefix of ' + possiblePrefixes[j] + ' and a length of ' + possibleLengths[i], function() {
-          detectNetwork(possiblePrefixes[j] + emptyDigits1).should.equal(cardName2);
-        });
-      }) (i, j, emptyDigits1);
-    }
-  }
-
 });

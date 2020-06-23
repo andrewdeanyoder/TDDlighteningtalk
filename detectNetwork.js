@@ -7,35 +7,15 @@
 //   1. The first few numbers (called the prefix)
 //   2. The number of digits in the number (called the length)
 
+
+
 var detectNetwork = function(cardNumber) {
   // Note: `cardNumber` will always be a string
   // The Diner's Club network always starts with a 38 or 39 and is 14 digits long
   // The American Express network always starts with a 34 or 37 and is 15 digits long
 
-  // Once you've read this, go ahead and try to implement this function, then return to the console.
-
   //set card names at beginning, for easy access
-  var cardnames = ["Diner's Club", 'American Express', 'MasterCard', 'Discover', 'Maestro', 'China UnionPay', 'Switch', 'Visa'];
-
-  //check if input is a string
-  if(typeof cardNumber !== 'string'){
-    return 'Please input a string';
-  }
-
-  //check if input converts to a number
-  if(Number.isNaN(Number(cardNumber))) {
-    return 'not a number formatted as a string';
-  }
-
-  //helper function for Diner's Club card
-  var isDinersClub = function (prefix, length) {
-    return (prefix === '38' || prefix === '39') && length === 14;
-  }
-
-  //test for Diner's club
-  if(isDinersClub(cardNumber.substring(0, 2), cardNumber.length)) {
-    return cardnames[0];
-  }
+  var cardnames = ['', 'American Express', 'MasterCard', 'Discover', 'Maestro', 'China UnionPay', 'Switch', 'Visa'];
 
   //helper function for an American Express card
   var isAmExpress = function (prefix, length) {
@@ -47,17 +27,13 @@ var detectNetwork = function(cardNumber) {
     return cardnames[1];
   }
 
-  //helper function for MasterCard
-  var isMasterCard = function (prefix, length) {
-    return prefix >= 51 && prefix <= 55 && length === 16;
+  //helper function for Visa
+  var isVisa = function (prefix, length) {
+    return (length === 13 || length === 16 || length === 19) && prefix === '4';
   }
 
-  //convert first two digits to a number
-  var prefix = parseInt(cardNumber.substring(0, 2), 10);
-
-  //Test for Mastercard
-  if(isMasterCard(prefix, cardNumber.length)) {
-    return cardnames[2];
+  if(isVisa(cardNumber[0], cardNumber.length)) {
+    return cardnames[7];
   }
 
 
@@ -123,35 +99,6 @@ var detectNetwork = function(cardNumber) {
 
   if(isUnionPay(prefix, cardNumber.length)) {
     return cardnames[5];
-  }
-
-  //modify prefix to be first six digits for Switch
-  prefix = cardNumber.substring(0, 6);
-
-  //test for Switch
-    //length of 16, 18, or 19
-    //prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
-  var isSwitch = function (prefix, length) {
-    //test the length
-    if (length === 16 || length === 18 || length === 19) {
-      //find first four digits of the prefix
-      var firstFourDigits = prefix.substring(0,4);
-      //test the prefix
-      return firstFourDigits === '4903' || firstFourDigits === '4905' || firstFourDigits === '4911' || firstFourDigits === '4936' ||firstFourDigits === '6333' || firstFourDigits === '6759' || prefix === '564182' || prefix === '633110';
-    }
-  }
-
-  //test the digits
-  if(isSwitch(prefix, cardNumber.length)) {
-      return cardnames[6];
-  }
-
-  var isVisa = function (prefix, length) {
-    return (length === 13 || length === 16 || length === 19) && prefix === '4';
-  }
-
-  if(isVisa(cardNumber[0], cardNumber.length)) {
-    return cardnames[7];
   } else {
     return 'No Network';
   }
