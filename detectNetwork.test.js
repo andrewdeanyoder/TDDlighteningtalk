@@ -96,11 +96,60 @@ describe('Visa with expect', function() {
 
 });
 
+//generates a credit card number based on a prefix and a length
+var numberGenerator = function (prefix, targetLength) {
+	if(typeof prefix !== 'string') {
+		throw new Error('prefix must be a string');
+	}
+
+	//check if input converts to a number
+  if(Number.isNaN(Number(targetLength))) {
+		throw new Error('Length not a number');
+  }
+
+  //adds an 8 until target length is reached
+  for (var i = prefix.length; i < targetLength; i++) {
+    prefix += 9;
+  }
+  return prefix;
+}
+
+// Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
 describe('Discover', function() {
-  // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
 
   var should = chai.should();
 
+  //arrays of possible prefixes
+  var prefixes = ['6011', '65']
+  var lengths = [16, 19];
+
+  //add the prefixes between 644 and 649
+  for (let i = 644; i <= 649; i++) {
+    prefixes.push(i.toString());
+  }
+
+  //loop through both prefixes & lengths
+  for (let i = 0; i < prefixes.length; i++) {
+    for (let j = 0; j < lengths.length; j++) {
+
+      //Immediately-invoked function expression to handle scope issues
+      (function (currentPrefix, currentLength) {
+
+        //generate a new cardnumber to test
+        var cardNumber = numberGenerator(currentPrefix, currentLength);
+
+        //test the cardnumber
+        it('has a prefix of ' + currentPrefix + ' and a length of ' + currentLength, function () {
+
+          detectNetwork(cardNumber).should.equal('Discover');
+
+        });
+
+      }) (prefixes[i], lengths[j]);
+    }
+  }
+
+  /*
   it('has a prefix of 6011 and a length of 16', function() {
     detectNetwork('6011567890123456').should.equal('Discover');
   })
@@ -128,7 +177,7 @@ describe('Discover', function() {
 
   it('has a prefix of 65 and a length of 19', function() {
     detectNetwork('6534567890123456789').should.equal('Discover');
-  })
+  }) */
 });
 
 
