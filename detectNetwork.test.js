@@ -107,7 +107,7 @@ var numberGenerator = function (prefix, targetLength) {
 		throw new Error('Length not a number');
   }
 
-  //adds an 8 until target length is reached
+  //adds an 9 until target length is reached
   for (var i = prefix.length; i < targetLength; i++) {
     prefix += 9;
   }
@@ -120,13 +120,8 @@ describe('Discover', function() {
   var should = chai.should();
 
   //arrays of possible prefixes
-  var prefixes = ['6011', '65']
+  var prefixes = ['6011', '65', '644', '645', '646', '647', '648', '649'];
   var lengths = [16, 19];
-
-  //add the prefixes between 644 and 649
-  for (let i = 644; i <= 649; i++) {
-    prefixes.push(i.toString());
-  }
 
   //loop through both prefixes & lengths
   for (let i = 0; i < prefixes.length; i++) {
@@ -140,126 +135,62 @@ describe('Discover', function() {
 
         //test the cardnumber
         it('has a prefix of ' + currentPrefix + ' and a length of ' + currentLength, function () {
-
           detectNetwork(cardNumber).should.equal('Discover');
-
         });
 
       }) (prefixes[i], lengths[j]);
     }
   }
-
-  /*
-  it('has a prefix of 6011 and a length of 16', function() {
-    detectNetwork('6011567890123456').should.equal('Discover');
-  })
-
-  it('has a prefix of 6011 and a length of 19', function() {
-    detectNetwork('6011567890123456789').should.equal('Discover');
-  })
-
-  for (var prefix = 644; prefix <= 649; prefix++) {
-    (function (prefix) {
-      var firstFour = prefix.toString();
-      it('has a prefix of ' + prefix + ' and a length of 16', function() {
-        detectNetwork(firstFour + '4567890123456').should.equal('Discover');
-      });
-
-      it('has a prefix of ' + prefix + ' and a length of 19', function() {
-        detectNetwork(firstFour + '4567890123456789').should.equal('Discover');
-      })
-    }) (prefix);
-  }
-
-  it('has a prefix of 65 and a length of 16', function() {
-    detectNetwork('6534567890123456').should.equal('Discover');
-  })
-
-  it('has a prefix of 65 and a length of 19', function() {
-    detectNetwork('6534567890123456789').should.equal('Discover');
-  }) */
 });
 
+//pushes a range of numbers to an array
+var addToArray = function (array, min, max) {
 
-//Maestro tests
-//length of 12-19 and a prefix of 5018, 5020, 5038, or 6304
-describe('Maestro', function() {
-  //empty digits after the prefix
-  var accumulator = '0000000';
-  //iterate through the possible lengths
-  for(var l = 12; l <= 19; l++) {
-    //add another empty digit so that accumulator is the correct length
-    accumulator += '0';
-    (function (l, accumulator) {
-      //test all prefixes
-      it('has a prefix of ' + 5018 + ' and a length of ' + l, function() {
-        var cardNum1 = '5018' + accumulator;
-        //console.log(l, accumulator, accumulator.length, cardNum1, cardNum1.length);
-        detectNetwork('5018' + accumulator).should.equal('Maestro');
-      });
-
-      it('has a prefix of ' + 5020 + ' and a length of ' + l, function() {
-        var cardNum2 = '5020' + accumulator;
-        //console.log(l, accumulator, accumulator.length, cardNum2, cardNum2.length);
-        detectNetwork('5020' + accumulator).should.equal('Maestro');
-      });
-
-      it('has a prefix of ' + 5038 + ' and a length of ' + l, function() {
-        var cardNum3 = '5038' + accumulator;
-        //console.log(l, accumulator, accumulator.length, cardNum3, cardNum3.length);
-        detectNetwork('5038' + accumulator).should.equal('Maestro');
-      });
-
-      it('has a prefix of ' + 6304 + ' and a length of ' + l, function() {
-        var cardNum4 = '6304' + accumulator;
-        //console.log(l, accumulator, accumulator.length, cardNum4, cardNum4.length);
-        detectNetwork('6304' + accumulator).should.equal('Maestro');
-      });
-    })(l, accumulator)
+  if (!Array.isArray(array)) {
+    throw new Error('input is not an array');
   }
-});
 
+  if (typeof min !== 'number' || typeof max !== 'number'){
+    throw new Error('min/max is not a number');
+  }
+
+  for (min; min <= max; min++) {
+    array.push(min.toString());
+  }
+
+}
 
 //length of 16-19 and prefix of 624-626, 6282-6288 or 622126-622925
 describe('China UnionPay', function() {
-  var cardName1 = 'China UnionPay';
-  //empty digits after the prefix
-  var emptyDigits = '000000000';
-  //iterate through the possible lengths
-  for(var l = 16; l <= 19; l++) {
-    //increase the length of the empty digits
-    emptyDigits += 0;
-    //loop through the 624 prefixes
-    for (var prefix1 = 624; prefix1 <= 626; prefix1++) {
-      //wrap function
-      (function (l, prefix1, emptyDigits) {
-        //call it() on prefix1 add an additional 3 digits + emptyDigits
-        it('has a prefix of ' + prefix1 + ' and a length of ' + l, function() {
-          detectNetwork(prefix1.toString() + '000' + emptyDigits).should.equal(cardName1);
-        });
-      }) (l, prefix1, emptyDigits);
-    }
 
-    //loop through 6282 prefixes
-    for (var prefix2 = 6282; prefix2 <= 6288; prefix2++) {
-      //wrap function
-      (function (l, prefix2, emptyDigits) {
-        //call it() on prefix2 add an additional 2 digits + emptyDigits
-        it('has a prefix of ' + prefix2 + ' and a length of ' + l, function() {
-          detectNetwork(prefix2.toString() + '00' + emptyDigits).should.equal(cardName1);
-        });
-      }) (l, prefix2, emptyDigits);
-    }
+  var should = chai.should();
 
-    //loop through 622126 prefixes
-    for (var prefix3 = 622126; prefix3 <= 622925; prefix3++) {
-      //wrap function
-      (function (l, prefix3, emptyDigits) {
-        //call it() on prefix3 add emptyDigits
-        it('has a prefix of ' + prefix3 + ' and a length of ' + l, function() {
-          detectNetwork(prefix3.toString() + emptyDigits).should.equal(cardName1);
+  //arrays of possible prefixes and lengths
+  var prefixes = ['624', '625', '626'];
+  var lengths = [16, 17, 18, 19];
+
+  //add prefixes 6282-6288
+  addToArray(prefixes, 6282, 6288);
+
+  //add prefixes 622126-622925
+  addToArray(prefixes, 622126, 622925);
+
+  //loop through both prefixes & lengths
+  for (let i = 0; i < prefixes.length; i++) {
+    for (let j = 0; j < lengths.length; j++) {
+
+      //Immediately-invoked function expression to handle scope issues
+      (function (currentPrefix, currentLength) {
+
+        //generate a new cardnumber to test
+        var cardNumber = numberGenerator(currentPrefix, currentLength);
+
+        //test the cardnumber
+        it('has a prefix of ' + currentPrefix + ' and a length of ' + currentLength, function () {
+          detectNetwork(cardNumber).should.equal('China UnionPay');
         });
-      }) (l, prefix3, emptyDigits);
+
+      }) (prefixes[i], lengths[j]);
     }
   }
 });
