@@ -104,7 +104,7 @@ var detectNetwork = function(cardNumber) {
     return cardnames[4];
   }
 
-  //modify prefix to be first six digits
+  //modify prefix to be first six digits for Union Pay
   prefix = parseInt(cardNumber.substring(0, 6));
 
   //helper function for China UnionPay
@@ -125,25 +125,34 @@ var detectNetwork = function(cardNumber) {
     return cardnames[5];
   }
 
+  //modify prefix to be first six digits for Switch
+  prefix = cardNumber.substring(0, 6);
+
   //test for Switch
     //length of 16, 18, or 19
     //prefix of 4903, 4905, 4911, 4936, 6333, 6759, 564182, 633110
-  //test the length
-  if (cardNumber.length === 16 || cardNumber.length === 18 || cardNumber.length === 19) {
-    //find first four digits and first six digits
-    var firstFourDigitsSwitch = cardNumber.substring(0,4);
-    var firstSixDigitsSwitch = cardNumber.substring(0,6);
-    //test the digits
-    if(firstFourDigitsSwitch === '4903' || firstFourDigitsSwitch === '4905' || firstFourDigitsSwitch === '4911' || firstFourDigitsSwitch === '4936' ||firstFourDigitsSwitch === '6333' || firstFourDigitsSwitch === '6759' || firstSixDigitsSwitch === '564182' || firstSixDigitsSwitch === '633110') {
-      return cardnames[6];
+  var isSwitch = function (prefix, length) {
+    //test the length
+    if (length === 16 || length === 18 || length === 19) {
+      //find first four digits of the prefix
+      var firstFourDigits = prefix.substring(0,4);
+      //test the prefix
+      return firstFourDigits === '4903' || firstFourDigits === '4905' || firstFourDigits === '4911' || firstFourDigits === '4936' ||firstFourDigits === '6333' || firstFourDigits === '6759' || prefix === '564182' || prefix === '633110';
     }
   }
 
-  //test for Visa
-  if((cardNumber.length === 13 || cardNumber.length === 16 || cardNumber.length === 19) && cardNumber[0] === '4') {
-    return cardnames[7];
+  //test the digits
+  if(isSwitch(prefix, cardNumber.length)) {
+      return cardnames[6];
   }
-  else {
+
+  var isVisa = function (prefix, length) {
+    return (length === 13 || length === 16 || length === 19) && prefix === '4';
+  }
+
+  if(isVisa(cardNumber[0], cardNumber.length)) {
+    return cardnames[7];
+  } else {
     return 'No Network';
   }
 };
