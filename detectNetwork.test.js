@@ -8,11 +8,7 @@ describe('Introduction to Mocha Tests - READ ME FIRST', function() {
 */
 
 describe('American Express', function() {
-  var assert = function(isTrue) {
-    if(!isTrue) {
-      throw new Error('Test failed');
-    }
-  };
+  var assert = chai.assert;
 
   it('has a prefix of 34 and a length of 15', function() {
     assert(detectNetwork('343456789012345') === 'American Express');
@@ -47,6 +43,7 @@ describe('Visa with assert', function() {
   });
 });
 
+
 describe('Visa with should', function() {
   var should = chai.should();
 
@@ -70,6 +67,7 @@ describe('Visa with should', function() {
     detectNetwork('4123456789012345678').should.equal('Visa');
   });
 });
+
 
 describe('Visa with expect', function() {
   var expect = chai.expect;
@@ -114,6 +112,7 @@ var numberGenerator = function (prefix, targetLength) {
   return prefix;
 }
 
+
 // Discover prefix: 6011, 644-649, or 65, and a length of 16 or 19.
 describe('Discover', function() {
 
@@ -142,6 +141,7 @@ describe('Discover', function() {
     }
   }
 });
+
 
 //pushes a range of numbers to an array
 var addToArray = function (array, min, max) {

@@ -8,7 +8,6 @@
 //   2. The number of digits in the number (called the length)
 
 
-
 var detectNetwork = function(cardNumber) {
   // The American Express network always starts with a 34 or 37 and is 15 digits long
 
@@ -31,7 +30,7 @@ var detectNetwork = function(cardNumber) {
     return 'Visa';
   }
 
-  //get first four digits for Discover & Maestro prefix
+  //get first four digits for Discover prefix
   var prefix = cardNumber.substring(0, 4);
 
   //helper function for a Discover Card
